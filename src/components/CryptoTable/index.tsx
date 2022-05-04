@@ -13,13 +13,18 @@ import {
 } from "@mui/material";
 import { observer } from "mobx-react";
 import currenciesStore from "../../store/currenciesStore";
+import { TCoin, TCoinDiff } from "../../types";
 
 const CryptoTable = observer(() => {
-  const items = currenciesStore.getItems;
+  const items: TCoin[] = currenciesStore.getItems;
+  const diffObj: TCoinDiff = currenciesStore.getDiffObj;
 
   useEffect(() => {
     if (currenciesStore) {
       currenciesStore.fetchCoins();
+      setInterval(() => {
+        currenciesStore.fetchCoins();
+      }, 30 * 1000);
     }
   }, []);
 
@@ -58,7 +63,14 @@ const CryptoTable = observer(() => {
                   </TableCell>
                   <TableCell align="left">{coin.name}</TableCell>
                   <TableCell align="left">{coin.fullName}</TableCell>
-                  <TableCell align="left">${coin.price}</TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      backgroundColor: `${diffObj[coin.name]}`,
+                    }}
+                  >
+                    ${coin.price}
+                  </TableCell>
                   <TableCell align="left">${coin.volume24Hour}</TableCell>
                 </TableRow>
               ))}

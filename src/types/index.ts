@@ -9,3 +9,5 @@ export type TCoin = {
 export type ICryptoTable = {
   items: TCoin[];
 };
+
+export type TCoinDiff = { [key: string]: string };
