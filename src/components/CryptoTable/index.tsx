@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import {
   Avatar,
@@ -11,12 +11,17 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { TCoin } from "../../types";
 import { observer } from "mobx-react";
+import currenciesStore from "../../store/currenciesStore";
 
-const CryptoTable = observer(({ currenciesStore }: any) => {
-  const items: TCoin[] = [];
-  console.log(currenciesStore);
+const CryptoTable = observer(() => {
+  const items = currenciesStore.getItems;
+
+  useEffect(() => {
+    if (currenciesStore) {
+      currenciesStore.fetchCoins();
+    }
+  }, []);
 
   return (
     <>

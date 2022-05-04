@@ -6,4 +6,4 @@ class ConverterStore {
   }
 }
 
-export default ConverterStore;
+export default new ConverterStore();

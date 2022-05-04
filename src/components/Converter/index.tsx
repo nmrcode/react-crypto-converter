@@ -8,12 +8,13 @@ import {
   TextField,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
+import { observer } from "mobx-react";
 
 const paperStyle = {
   p: 1,
 };
 
-const Converter = () => {
+const Converter = observer(() => {
   return (
     <Paper sx={paperStyle}>
       <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -68,6 +69,6 @@ const Converter = () => {
       </Grid>
     </Paper>
   );
-};
+});
 
 export default Converter;
