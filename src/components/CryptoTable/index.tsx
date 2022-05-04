@@ -2,6 +2,8 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import {
   Avatar,
+  Box,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -10,43 +12,56 @@ import {
   TableRow,
 } from "@mui/material";
 import { TCoin } from "../../types";
+import { observer } from "mobx-react";
 
-interface ICryptoTable {
-  items: TCoin[];
-}
+const CryptoTable = observer(({ currenciesStore }: any) => {
+  const items: TCoin[] = [];
+  console.log(currenciesStore);
 
-const CryptoTable = ({ items }: ICryptoTable) => {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="Crypto table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell align="left">Сокращение</TableCell>
-            <TableCell align="left">Полное название</TableCell>
-            <TableCell align="left">Стоимость</TableCell>
-            <TableCell align="left">Объем 24ч</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items.map((coin) => (
-            <TableRow
-              key={coin.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                <Avatar src={coin.imageUrl} alt={coin.name + " icon"} />
-              </TableCell>
-              <TableCell align="left">{coin.name}</TableCell>
-              <TableCell align="left">{coin.fullName}</TableCell>
-              <TableCell align="left">${coin.price}</TableCell>
-              <TableCell align="left">${coin.volume24Hour}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {!items.length ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress size={100} />
+        </Box>
+      ) : (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="Crypto table">
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell align="left">Сокращение</TableCell>
+                <TableCell align="left">Полное название</TableCell>
+                <TableCell align="left">Стоимость</TableCell>
+                <TableCell align="left">Объем 24ч</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map((coin) => (
+                <TableRow
+                  key={coin.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <Avatar src={coin.imageUrl} alt={coin.name + " icon"} />
+                  </TableCell>
+                  <TableCell align="left">{coin.name}</TableCell>
+                  <TableCell align="left">{coin.fullName}</TableCell>
+                  <TableCell align="left">${coin.price}</TableCell>
+                  <TableCell align="left">${coin.volume24Hour}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </>
   );
-};
-
+});
 export default CryptoTable;

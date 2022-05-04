@@ -5,3 +5,7 @@ export type TCoin = {
   price: number;
   volume24Hour: number;
 };
+
+export type ICryptoTable = {
+  items: TCoin[];
+};
