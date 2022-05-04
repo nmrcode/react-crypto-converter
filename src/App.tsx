@@ -1,26 +1,73 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 
 const paperStyle = {
   p: 1,
 };
 
 function App() {
+  const [allCoins, setAllCoins] = useState();
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD"
+      )
+      .then(({ data }) => {
+        const coins = data.Data;
+        setAllCoins(coins);
+      })
+      .catch((e) => console.log(`${e}`));
+  }, []);
+
   return (
     <Container maxWidth="lg">
       <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid item xs={8}>
-          <Paper sx={paperStyle}>1</Paper>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell align="left">FullName</TableCell>
+                  <TableCell align="left">Name</TableCell>
+                  <TableCell align="left">Pricing</TableCell>
+                  <TableCell align="left">Volume 24h</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow
+                  // key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    name
+                  </TableCell>
+                  <TableCell align="left">1</TableCell>
+                  <TableCell align="left">1</TableCell>
+                  <TableCell align="left">1</TableCell>
+                  <TableCell align="left">1</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Grid>
         <Grid item xs={4}>
           <Paper sx={paperStyle}>
@@ -76,7 +123,7 @@ function App() {
             </Grid>
             <Typography
               component="p"
-              fontWeight={600}
+              fontWeight={500}
               fontSize={20}
               textAlign={"center"}
             >
