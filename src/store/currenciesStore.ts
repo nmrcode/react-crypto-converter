@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { TCoin, TCoinDiff } from "../types";
 import axios from "axios";
+import converterStore from "./converterStore";
 
 class CurrenciesStore {
   constructor() {
@@ -62,8 +63,8 @@ class CurrenciesStore {
           return obj;
         });
         this.setItems(coins);
-      })
-      .catch((e) => console.log(`${e}`));
+        converterStore.setSelectedCoin(coins[0]);
+      });
   };
 
   //Computed

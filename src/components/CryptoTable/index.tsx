@@ -14,6 +14,7 @@ import {
 import { observer } from "mobx-react";
 import currenciesStore from "../../store/currenciesStore";
 import { TCoin, TCoinDiff } from "../../types";
+import converterStore from "../../store/converterStore";
 
 const CryptoTable = observer(() => {
   const items: TCoin[] = currenciesStore.getItems;
@@ -27,6 +28,12 @@ const CryptoTable = observer(() => {
       }, 30 * 1000);
     }
   }, []);
+
+  const onClickRow = (coin: TCoin) => {
+    if (converterStore) {
+      converterStore.setSelectedCoin(coin);
+    }
+  };
 
   return (
     <>
@@ -56,7 +63,12 @@ const CryptoTable = observer(() => {
               {items.map((coin) => (
                 <TableRow
                   key={coin.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    cursor: "pointer",
+                  }}
+                  hover={true}
+                  onClick={() => onClickRow(coin)}
                 >
                   <TableCell component="th" scope="row">
                     <Avatar src={coin.imageUrl} alt={coin.name + " icon"} />
