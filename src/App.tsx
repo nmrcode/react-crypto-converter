@@ -9,10 +9,10 @@ function App() {
     <Container maxWidth="lg" sx={{ mt: 2, mb: 12 }}>
       <Title text={"Конвертер"} />
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={12} lg={8}>
           <CryptoTable />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} lg={4}>
           <Converter />
         </Grid>
       </Grid>
